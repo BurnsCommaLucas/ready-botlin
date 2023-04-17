@@ -1,7 +1,12 @@
-version: "2.1"
+version: "3.7"
 services:
-  mongo:
-    container_name: mongo
-    image: mongo:5.0.16
-    ports:
-      - "27017:27017"
+  ready-botlin:
+    container_name: ready-botlin-${ENV}
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - "DISCORD_BOT_TOKEN=${BOT_TOKEN}"
+        - "MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}"
+        - "SPRING_PROFILES_ACTIVE=${ENV}"
