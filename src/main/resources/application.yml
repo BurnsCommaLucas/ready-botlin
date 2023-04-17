@@ -1,0 +1,8 @@
+bot:
+  roleResolveEnabled: false
+
+discord:
+  token: ${DISCORD_BOT_TOKEN}
+
+mongo:
+  connString: ${MONGO_CONNECTION_STRING}

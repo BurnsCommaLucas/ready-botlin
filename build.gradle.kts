@@ -10,8 +10,8 @@ plugins {
 }
 
 group = "io.burnscommalucas"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+version = "1.0.0"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -51,13 +51,8 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        // freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
-}
-
-tasks.withType<JavaCompile> {
-    sourceCompatibility = "1.8"
 }
 
 tasks.withType<Test> {
