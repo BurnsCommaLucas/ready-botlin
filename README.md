@@ -1,7 +1,6 @@
-# ready-bot <img src="./images/check.png" alt="check icon" style="max-width: .8em"/>
+# ready-bot
 
 ![Licence Shield](https://img.shields.io/github/license/burnscommalucas/ready-botlin?link=./LICENSE)
-![Licence Shield](https://img.shields.io/github/license/burnscommalucas/ready-botlin?logo=discord&logoColor=white)
 
 
 A WoW inspired ready-check bot for [Discord](https://discord.com) servers. This bot is a replacement of the 
