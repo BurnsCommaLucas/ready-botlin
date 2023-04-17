@@ -1,7 +1,7 @@
 package io.burnscommalucas.readybotlin.database
 
 import discord4j.common.util.Snowflake
-import io.burnscommalucas.readybotlin.MongoConfig
+import io.burnscommalucas.readybotlin.configuration.MongoConfig
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactor.awaitSingleOrNull

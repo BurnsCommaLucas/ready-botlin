@@ -1,4 +1,4 @@
-package io.burnscommalucas.readybotlin.service
+package io.burnscommalucas.readybotlin.model
 
 import io.burnscommalucas.readybotlin.model.command.Command.CHECK
 import io.burnscommalucas.readybotlin.model.command.Command.DOCS

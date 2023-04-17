@@ -4,7 +4,7 @@ import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.entity.Member
 import discord4j.core.`object`.entity.Role
 import discord4j.core.spec.InteractionReplyEditMono
-import io.burnscommalucas.readybotlin.BotConfig
+import io.burnscommalucas.readybotlin.configuration.BotConfig
 import io.burnscommalucas.readybotlin.database.CheckRepository
 import io.burnscommalucas.readybotlin.model.check.NumericCheck
 import io.burnscommalucas.readybotlin.model.check.TargetedCheck
@@ -14,6 +14,7 @@ import io.burnscommalucas.readybotlin.model.command.CheckCommandOption.MENTIONS
 import io.burnscommalucas.readybotlin.model.command.Command.CHECK
 import io.burnscommalucas.readybotlin.model.command.Command.READY
 import io.burnscommalucas.readybotlin.plural
+import io.burnscommalucas.readybotlin.service.discord.StringResolverService
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.slf4j.LoggerFactory

@@ -1,4 +1,4 @@
-package io.burnscommalucas.readybotlin.service
+package io.burnscommalucas.readybotlin.service.discord
 
 import io.burnscommalucas.readybotlin.model.check.NumericCheck
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck

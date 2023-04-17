@@ -1,20 +1,23 @@
 package io.burnscommalucas.readybotlin.service
 
-import io.burnscommalucas.readybotlin.DiscordConfig
+import io.burnscommalucas.readybotlin.configuration.DiscordConfig
 import io.burnscommalucas.readybotlin.model.command.Command
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.awaitFirstOrNull
-import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
 @Component
-class CommandSetter(private val discordConfig: DiscordConfig) {
+class CommandSetterService(private val discordConfig: DiscordConfig) {
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val client = discordConfig.getDiscordClient()
+    private val scope = CoroutineScope(Dispatchers.Default)
 
     @PostConstruct
-    fun registerCommands() = runBlocking {
+    fun registerCommands() = scope.launch {
         try {
             client.restClient.applicationService
                 .bulkOverwriteGlobalApplicationCommand(

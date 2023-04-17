@@ -1,17 +1,20 @@
-package io.burnscommalucas.readybotlin.service
+package io.burnscommalucas.readybotlin.service.handler
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import io.burnscommalucas.readybotlin.database.CheckRepository
+import io.burnscommalucas.readybotlin.model.OutboundMessaging.DOCS_MESSAGE
+import io.burnscommalucas.readybotlin.model.OutboundMessaging.HELP_MESSAGE
+import io.burnscommalucas.readybotlin.model.OutboundMessaging.NO_CHECK_MESSAGE
 import io.burnscommalucas.readybotlin.plural
-import io.burnscommalucas.readybotlin.service.OutboundMessaging.DOCS_MESSAGE
-import io.burnscommalucas.readybotlin.service.OutboundMessaging.HELP_MESSAGE
-import io.burnscommalucas.readybotlin.service.OutboundMessaging.NO_CHECK_MESSAGE
+import io.burnscommalucas.readybotlin.service.CheckCreationService
+import io.burnscommalucas.readybotlin.service.discord.LookupService
+import io.burnscommalucas.readybotlin.service.discord.StringResolverService
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import kotlin.jvm.optionals.getOrElse
 
 @Component
-class Handlers(
+class CheckHandlers(
     private val checkCreationService: CheckCreationService,
     private val checkRepository: CheckRepository,
     private val lookupService: LookupService,
