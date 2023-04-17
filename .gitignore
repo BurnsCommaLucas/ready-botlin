@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 **/application-local.y*ml
+**/ready-botlin*.jar
 
 ### STS ###
 .apt_generated

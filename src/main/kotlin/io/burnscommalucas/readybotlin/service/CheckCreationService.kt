@@ -103,10 +103,10 @@ class CheckCreationService(
 
             event.editReply(
                 """
-                    You'll need to select some users to create a `$MENTIONS` check. Keep in mind I can't wait for bots$roleMentionExplain or `@everyone/@here`.
-                    
-                    If you'd like to wait for a number of users rather than specific users, use `/$CHECK $COUNT` instead.
-                    """.trimIndent()
+                You'll need to select some users to create a `$MENTIONS` check. Keep in mind I can't wait for bots$roleMentionExplain or `@everyone/@here`.
+                
+                If you'd like to wait for a number of users rather than specific users, use `/$CHECK $COUNT` instead.
+                """.trimIndent()
             ).awaitSingleOrNull()
             return null
         }
