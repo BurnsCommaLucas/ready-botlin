@@ -43,7 +43,7 @@ class DiscordConfig {
                         }
                 } else {
                     log.info("Role Resolution disabled, skipping ${Intent.GUILD_MEMBERS.name} intent")
-                    it
+                    it.setDisabledIntents(IntentSet.all())
                 }
             }
             .login()
