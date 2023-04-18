@@ -5,6 +5,7 @@ import discord4j.core.GatewayDiscordClient
 import discord4j.core.`object`.presence.Activity
 import discord4j.core.`object`.presence.ClientActivity
 import discord4j.core.`object`.presence.ClientPresence
+import discord4j.core.`object`.presence.Status
 import discord4j.gateway.intent.Intent
 import discord4j.gateway.intent.IntentSet
 import kotlinx.coroutines.reactive.awaitFirstOrNull
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import kotlin.properties.Delegates
 
 @Configuration
 @ConfigurationProperties(prefix = "discord")
@@ -29,21 +29,22 @@ class DiscordConfig {
         DiscordClient.create(token)
             .gateway()
             .let {
+                val buildPresenceWithText: (String) -> ClientPresence = { text ->
+                    ClientPresence.of(
+                        Status.ONLINE,
+                        // Bots can't use the CUSTOM type (😡) so PLAYING will have to do
+                        ClientActivity.of(Activity.Type.PLAYING, text, null)
+                    )
+                }
+
                 if (roleResolveEnabled) {
                     log.info("Role Resolution enabled, requesting ${Intent.GUILD_MEMBERS.name} intent")
                     it.setEnabledIntents(IntentSet.of(Intent.GUILD_MEMBERS))
-                        .setInitialPresence {
-                            ClientPresence.online(
-                                ClientActivity.of(
-                                    Activity.Type.CUSTOM,
-                                    "Now with role mentions!",
-                                    null
-                                )
-                            )
-                        }
+                        .setInitialPresence { buildPresenceWithText("Now with role mentions!") }
                 } else {
                     log.info("Role Resolution disabled, skipping ${Intent.GUILD_MEMBERS.name} intent")
-                    it.setDisabledIntents(IntentSet.all())
+                    it.setEnabledIntents(IntentSet.none())
+                        .setInitialPresence { buildPresenceWithText("/check") }
                 }
             }
             .login()
