@@ -10,3 +10,6 @@ services:
         - "DISCORD_BOT_TOKEN=${BOT_TOKEN}"
         - "MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}"
         - "SPRING_PROFILES_ACTIVE=${ENV}"
+networks:
+  default:
+    name: docker_default

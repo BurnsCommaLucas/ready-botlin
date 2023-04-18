@@ -1,6 +1,7 @@
 # ready-bot
 
-![Licence Shield](https://img.shields.io/github/license/burnscommalucas/ready-botlin?link=./LICENSE)
+![Licence Badge](https://img.shields.io/github/license/burnscommalucas/ready-botlin?link=./LICENSE)
+![Server Count Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Flucas.burns.io%2Fshields%2Fguild-count)
 
 
 A WoW inspired ready-check bot for [Discord](https://discord.com) servers. This bot is a replacement of the 

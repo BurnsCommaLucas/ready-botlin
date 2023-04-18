@@ -3,7 +3,6 @@ package io.burnscommalucas.readybotlin.service.listener
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.lifecycle.ConnectEvent
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
-import kotlinx.coroutines.withTimeout
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
@@ -14,6 +13,7 @@ class StatusListeners(
     private val discordClient: GatewayDiscordClient,
 ) {
     private val log = LoggerFactory.getLogger(this.javaClass)
+
     // assume we start connected, since failure to connect means the program won't start
     private var _clientIsConnected = true
     val clientIsConnected: Boolean

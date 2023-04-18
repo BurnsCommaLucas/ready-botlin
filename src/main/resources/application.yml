@@ -6,3 +6,11 @@ discord:
 
 mongo:
   connString: ${MONGO_CONNECTION_STRING}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+    health:
+      enabled: true

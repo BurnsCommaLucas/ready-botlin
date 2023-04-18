@@ -53,7 +53,7 @@ class CheckHandlers(
 
         // TODO maybe separate this line to give feedback when half works?
         if (check.isCheckSatisfied() && checkRepository.deleteCheck(check) != null) {
-            val authorMention = lookupService.lookupUser(check.authorId).mention
+            val authorMention = lookupService.findUserById(check.authorId).mention
             message += "\n\nCheck complete, let's go, $authorMention!"
         }
         return event.reply(message)

@@ -1,8 +1,6 @@
 package io.burnscommalucas.readybotlin.service
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
-import discord4j.core.`object`.entity.Member
-import discord4j.core.`object`.entity.Role
 import discord4j.core.spec.InteractionReplyEditMono
 import io.burnscommalucas.readybotlin.configuration.BotConfig
 import io.burnscommalucas.readybotlin.database.CheckRepository
@@ -14,6 +12,7 @@ import io.burnscommalucas.readybotlin.model.command.CheckCommandOption.MENTIONS
 import io.burnscommalucas.readybotlin.model.command.Command.CHECK
 import io.burnscommalucas.readybotlin.model.command.Command.READY
 import io.burnscommalucas.readybotlin.plural
+import io.burnscommalucas.readybotlin.service.discord.LookupService
 import io.burnscommalucas.readybotlin.service.discord.StringResolverService
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
@@ -25,7 +24,8 @@ import reactor.core.publisher.Mono
 class CheckCreationService(
     private val botConfig: BotConfig,
     private val checkRepository: CheckRepository,
-    private val stringResolverService: StringResolverService
+    private val stringResolverService: StringResolverService,
+    private val lookupService: LookupService
 ) {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
@@ -71,24 +71,17 @@ class CheckCreationService(
 
         // Resolve all users mentioned via a custom role (if enabled)
         val roleMentions = if (botConfig.roleResolveEnabled) {
-            val guild = event.interaction.guild.awaitSingle()
-
-            val resolveGuildMembersWithRole: suspend (Role) -> Set<Member> = { targetRole ->
-                guild.members.collectList()
-                    .awaitSingle()
-                    .associateWith { member -> member.roles.collectList().awaitSingle() }
-                    .filter { (_, roles) -> roles.contains(targetRole) }
-                    .keys
-            }
 
             try {
+                val guild = event.interaction.guild.awaitSingle()
+
                 event.interaction
                     .commandInteraction.get()
                     .resolved.get()
                     .roles
                     .values
                     .flatMap { role ->
-                        if (!role.isEveryone) resolveGuildMembersWithRole(role)
+                        if (!role.isEveryone) lookupService.findMembersWithRole(guild, role)
                         else listOf()
                     }
                     .filter { !it.isBot }

@@ -18,7 +18,7 @@ class StringResolverService(private val lookupService: LookupService) {
         is TargetedCheck -> check.remainingUsers()
             .joinToString(", ") {
                 runBlocking {
-                    lookupService.lookupUser(it).mention
+                    lookupService.findUserById(it).mention
                 }
             }
 
