@@ -1,5 +1,4 @@
 discord:
-  roleResolveEnabled: false
   token: ${DISCORD_BOT_TOKEN}
 
 mongo:

@@ -10,6 +10,7 @@ import discord4j.gateway.intent.IntentSet
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
+import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,7 +19,9 @@ import kotlin.properties.Delegates
 @Configuration
 @ConfigurationProperties(prefix = "discord")
 class DiscordConfig {
-    var roleResolveEnabled by Delegates.notNull<Boolean>()
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
+    var roleResolveEnabled: Boolean = false
     lateinit var token: String
 
     @Bean
@@ -26,7 +29,8 @@ class DiscordConfig {
         DiscordClient.create(token)
             .gateway()
             .let {
-                if (roleResolveEnabled)
+                if (roleResolveEnabled) {
+                    log.info("Role Resolution enabled, requesting ${Intent.GUILD_MEMBERS.name} intent")
                     it.setEnabledIntents(IntentSet.of(Intent.GUILD_MEMBERS))
                         .setInitialPresence {
                             ClientPresence.online(
@@ -37,7 +41,10 @@ class DiscordConfig {
                                 )
                             )
                         }
-                else it
+                } else {
+                    log.info("Role Resolution disabled, skipping ${Intent.GUILD_MEMBERS.name} intent")
+                    it
+                }
             }
             .login()
             .awaitSingle()
