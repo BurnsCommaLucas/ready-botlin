@@ -13,25 +13,31 @@ import kotlinx.coroutines.runBlocking
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import kotlin.properties.Delegates
 
 @Configuration
 @ConfigurationProperties(prefix = "discord")
 class DiscordConfig {
+    var roleResolveEnabled by Delegates.notNull<Boolean>()
     lateinit var token: String
 
     @Bean
     fun getDiscordClient(): GatewayDiscordClient = runBlocking {
         DiscordClient.create(token)
             .gateway()
-            .setEnabledIntents(IntentSet.of(Intent.GUILD_MEMBERS))
-            .setInitialPresence {
-                ClientPresence.online(
-                    ClientActivity.of(
-                        Activity.Type.CUSTOM,
-                        "Now with role mentions!",
-                        null
-                    )
-                )
+            .let {
+                if (roleResolveEnabled)
+                    it.setEnabledIntents(IntentSet.of(Intent.GUILD_MEMBERS))
+                        .setInitialPresence {
+                            ClientPresence.online(
+                                ClientActivity.of(
+                                    Activity.Type.CUSTOM,
+                                    "Now with role mentions!",
+                                    null
+                                )
+                            )
+                        }
+                else it
             }
             .login()
             .awaitSingle()

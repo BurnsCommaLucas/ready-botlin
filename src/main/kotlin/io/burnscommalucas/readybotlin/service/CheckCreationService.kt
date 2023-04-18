@@ -2,7 +2,7 @@ package io.burnscommalucas.readybotlin.service
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.spec.InteractionReplyEditMono
-import io.burnscommalucas.readybotlin.configuration.BotConfig
+import io.burnscommalucas.readybotlin.configuration.DiscordConfig
 import io.burnscommalucas.readybotlin.database.CheckRepository
 import io.burnscommalucas.readybotlin.model.check.NumericCheck
 import io.burnscommalucas.readybotlin.model.check.TargetedCheck
@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono
 
 @Component
 class CheckCreationService(
-    private val botConfig: BotConfig,
+    private val discordConfig: DiscordConfig,
     private val checkRepository: CheckRepository,
     private val stringResolverService: StringResolverService,
     private val lookupService: LookupService
@@ -70,8 +70,7 @@ class CheckCreationService(
         }
 
         // Resolve all users mentioned via a custom role (if enabled)
-        val roleMentions = if (botConfig.roleResolveEnabled) {
-
+        val roleMentions = if (discordConfig.roleResolveEnabled) {
             try {
                 val guild = event.interaction.guild.awaitSingle()
 
@@ -93,7 +92,7 @@ class CheckCreationService(
         val allMentions = (userMentions + roleMentions).toSet()
 
         if (allMentions.isEmpty()) {
-            val roleMentionExplain = if (!botConfig.roleResolveEnabled) ", custom roles," else ""
+            val roleMentionExplain = if (!discordConfig.roleResolveEnabled) ", custom roles," else ""
 
             event.editReply(
                 """
