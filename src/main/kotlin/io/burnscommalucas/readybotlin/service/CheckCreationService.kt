@@ -111,15 +111,27 @@ class CheckCreationService(
         )
     }
 
-    private suspend fun numericCheckFromEvent(event: ChatInputInteractionEvent): NumericCheck? =
+    private suspend fun numericCheckFromEvent(event: ChatInputInteractionEvent): NumericCheck? {
         try {
-            NumericCheck(
+            val checkCount = event.options.first().value.get().asLong()
+            if (checkCount < 1) {
+                event.editReply(
+                    """
+                    Sorry, I can only wait for one or more users with a `$COUNT` check. Try creating your check with a count of at least 1.
+                    If you'd like to wait for specific users rather than a number, use `/$CHECK $MENTIONS`
+                    """.trimIndent()
+                ).subscribe()
+                return null
+            }
+
+            return NumericCheck(
                 channelId = event.interaction.channelId,
                 authorId = event.interaction.user.id,
-                targetCount = event.options.first().value.get().asLong()
+                targetCount = checkCount
             )
         } catch (e: Exception) {
             log.error("Could not create Numeric check", e)
-            null
+            return null
         }
+    }
 }
