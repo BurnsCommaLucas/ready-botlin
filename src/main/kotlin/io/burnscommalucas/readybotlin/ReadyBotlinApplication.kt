@@ -9,7 +9,3 @@ class ReadyBotlinApplication
 fun main(args: Array<String>) {
     runApplication<ReadyBotlinApplication>(*args)
 }
-
-//@Component
-//class BotConnection(botConfig: BotConfig) :
-//	DiscordApi by DiscordApiBuilder().setToken(botConfig.token).login().join()

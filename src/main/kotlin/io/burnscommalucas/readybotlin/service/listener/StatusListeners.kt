@@ -37,7 +37,7 @@ class StatusListeners(
     fun disconnectListener(): Mono<Void> =
         try {
             _clientIsConnected = false
-            Mono.empty<Void>()
+            Mono.empty()
         } catch (e: Exception) {
             log.error("Error while monitoring connect events!", e)
             Mono.empty()

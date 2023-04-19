@@ -7,6 +7,9 @@ import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.FAIL_
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.SUCCESS_NOT_READY
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.SUCCESS_READY
 
+/**
+ * A check for a number of users
+ */
 data class NumericCheck(
     override val channelId: Long,
     override val authorId: Long,

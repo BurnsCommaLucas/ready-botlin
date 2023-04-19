@@ -6,15 +6,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import discord4j.core.`object`.entity.Member
 import org.bson.codecs.pojo.annotations.BsonId
 
+/**
+ * The base type for all checks
+ */
 @JsonSubTypes(
     JsonSubTypes.Type(value = NumericCheck::class),
     JsonSubTypes.Type(value = TargetedCheck::class)
 )
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.DEDUCTION
-//    include = JsonTypeInfo.As.PROPERTY,
-//    property = "checkType"
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 abstract class ReadyCheck(
     @BsonId
     open val channelId: Long,

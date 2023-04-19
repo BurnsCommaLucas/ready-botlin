@@ -4,6 +4,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import discord4j.core.`object`.command.ApplicationCommandOption
 import discord4j.discordjson.json.ApplicationCommandRequest
 
+/**
+ * The commands and command options available in this bot
+ */
 enum class Command(private val description: String, private val options: List<CommandOptionParam> = listOf()) {
     CHECK(
         "Create a ready check",

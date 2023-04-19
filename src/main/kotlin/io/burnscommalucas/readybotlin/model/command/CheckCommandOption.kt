@@ -1,5 +1,8 @@
 package io.burnscommalucas.readybotlin.model.command
 
+/**
+ * Command options for the [Command.CHECK] command
+ */
 enum class CheckCommandOption {
     COUNT,
     MENTIONS;

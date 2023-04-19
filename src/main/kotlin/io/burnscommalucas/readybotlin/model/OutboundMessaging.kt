@@ -19,4 +19,6 @@ object OutboundMessaging {
         "To get involved in the development of ready-bot or to report an issue, visit our [Github](https://github.com/BurnsCommaLucas/ready-bot)"
 
     const val NO_CHECK_MESSAGE = "No ready check active in this channel."
+
+    val PLEASE_REPORT = "\n\nIf this keeps happening, please run `/$DOCS` to report this to my maker!"
 }

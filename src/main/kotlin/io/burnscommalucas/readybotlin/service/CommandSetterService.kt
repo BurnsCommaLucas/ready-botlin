@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
+/**
+ * This service registers all slash commands with discord on boot.
+ */
 @Component
 class CommandSetterService(private val discordConfig: DiscordConfig) {
     private val log = LoggerFactory.getLogger(this.javaClass)

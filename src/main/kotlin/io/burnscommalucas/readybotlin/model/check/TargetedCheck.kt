@@ -8,14 +8,13 @@ import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.FAIL_
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.SUCCESS_NOT_READY
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck.ReadyResponse.SUCCESS_READY
 
+/**
+ * A check for specific users
+ */
 data class TargetedCheck(
-//    @Transient
     override val channelId: Long,
     override val authorId: Long,
-//    override val event: Event,
-//    @Transient
     val targetUsers: Set<Long>,
-//    @Transient
     override val readyMembers: MutableSet<Long> = mutableSetOf()
 ) : ReadyCheck(channelId, authorId, readyMembers) {
 
