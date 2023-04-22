@@ -13,11 +13,11 @@ import io.burnscommalucas.readybotlin.model.command.Command.WHO
 import io.burnscommalucas.readybotlin.service.handler.CheckHandlers
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import javax.annotation.PostConstruct
 
-@Component
+@Service
 class CheckListeners(
     private val discordClient: GatewayDiscordClient,
     private val checkHandlers: CheckHandlers,

@@ -5,9 +5,9 @@ import io.burnscommalucas.readybotlin.model.check.ReadyCheck
 import io.burnscommalucas.readybotlin.model.check.TargetedCheck
 import io.burnscommalucas.readybotlin.plural
 import kotlinx.coroutines.runBlocking
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class StringResolverService(private val lookupService: LookupService) {
     fun remainingUsersString(check: ReadyCheck): String = when (check) {
         is NumericCheck -> {

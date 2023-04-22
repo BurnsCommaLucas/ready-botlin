@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import discord4j.common.util.Snowflake
 import io.burnscommalucas.readybotlin.model.check.ReadyCheck
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 class LocalCheckRepository(private val objectMapper: ObjectMapper) : CheckRepository {
     private val log = LoggerFactory.getLogger(this.javaClass)
     val checkMap = mutableMapOf<Long, ReadyCheck>()

@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 
 /**
  * This service registers all slash commands with discord on boot.
  */
-@Component
+@Service
 class CommandSetterService(private val discordConfig: DiscordConfig) {
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val client = discordConfig.getDiscordClient()
@@ -24,7 +24,8 @@ class CommandSetterService(private val discordConfig: DiscordConfig) {
         try {
             client.restClient.applicationService
                 .bulkOverwriteGlobalApplicationCommand(
-                    discordConfig.getApplicationId(),
+                    client.restClient.applicationId.awaitFirstOrNull()
+                        ?: throw IllegalStateException("Failed to retrieve ApplicationID from rest client"),
                     Command.values().map { it.getApplicationCommandRequest() },
                 )
                 .collectList()

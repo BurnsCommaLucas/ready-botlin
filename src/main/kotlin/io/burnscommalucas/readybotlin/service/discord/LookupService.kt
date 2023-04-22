@@ -8,9 +8,9 @@ import discord4j.core.`object`.entity.Role
 import discord4j.core.`object`.entity.User
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class LookupService(private val client: GatewayDiscordClient) {
     suspend fun findUserById(userId: Long): User =
         client.getUserById(Snowflake.of(userId)).awaitSingleOrNull()

@@ -4,11 +4,11 @@ import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.lifecycle.ConnectEvent
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import javax.annotation.PostConstruct
 
-@Component
+@Service
 class StatusListeners(
     private val discordClient: GatewayDiscordClient,
 ) {

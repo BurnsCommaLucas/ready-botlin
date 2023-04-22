@@ -12,9 +12,9 @@ import org.litote.kmongo.reactor.save
 import org.litote.kmongo.set
 import org.litote.kmongo.setTo
 import org.springframework.context.annotation.Primary
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 @Primary
 class MongoCheckRepository(mongoConfig: MongoConfig) : CheckRepository {
     private val collection =

@@ -9,11 +9,11 @@ import io.burnscommalucas.readybotlin.plural
 import io.burnscommalucas.readybotlin.service.CheckCreationService
 import io.burnscommalucas.readybotlin.service.discord.LookupService
 import io.burnscommalucas.readybotlin.service.discord.StringResolverService
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import kotlin.jvm.optionals.getOrElse
 
-@Component
+@Service
 class CheckHandlers(
     private val checkCreationService: CheckCreationService,
     private val checkRepository: CheckRepository,

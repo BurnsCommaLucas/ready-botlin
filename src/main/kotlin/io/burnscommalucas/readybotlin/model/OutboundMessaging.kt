@@ -15,8 +15,10 @@ object OutboundMessaging {
         If you still need help, you can come check out our Github page. Type `/$DOCS`
         """.trimIndent()
 
-    const val DOCS_MESSAGE =
-        "To get involved in the development of ready-bot or to report an issue, visit our [Github](https://github.com/BurnsCommaLucas/ready-bot)"
+    const val REPO_URL = "https://github.com/BurnsCommaLucas/ready-botlin"
+
+    val DOCS_MESSAGE =
+        "To get involved in the development of ready-bot or to report an issue, visit our [Github]($REPO_URL)"
 
     const val NO_CHECK_MESSAGE = "No ready check active in this channel."
 

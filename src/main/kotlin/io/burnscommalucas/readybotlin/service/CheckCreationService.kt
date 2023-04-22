@@ -2,7 +2,6 @@ package io.burnscommalucas.readybotlin.service
 
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.spec.InteractionReplyEditMono
-import io.burnscommalucas.readybotlin.configuration.DiscordConfig
 import io.burnscommalucas.readybotlin.database.CheckRepository
 import io.burnscommalucas.readybotlin.model.check.NumericCheck
 import io.burnscommalucas.readybotlin.model.check.TargetedCheck
@@ -17,12 +16,11 @@ import io.burnscommalucas.readybotlin.service.discord.StringResolverService
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
-@Component
+@Service
 class CheckCreationService(
-    private val discordConfig: DiscordConfig,
     private val checkRepository: CheckRepository,
     private val stringResolverService: StringResolverService,
     private val lookupService: LookupService
@@ -69,34 +67,30 @@ class CheckCreationService(
             listOf()
         }
 
-        // Resolve all users mentioned via a custom role (if enabled)
-        val roleMentions = if (discordConfig.roleResolveEnabled) {
-            try {
-                val guild = event.interaction.guild.awaitSingle()
+        // Resolve all users mentioned via a custom role
+        val roleMentions = try {
+            val guild = event.interaction.guild.awaitSingle()
 
-                event.interaction
-                    .commandInteraction.get()
-                    .resolved.get()
-                    .roles
-                    .values
-                    .flatMap { role ->
-                        if (!role.isEveryone) lookupService.findMembersWithRole(guild, role)
-                        else listOf()
-                    }
-                    .filter { !it.isBot }
-            } catch (_: NoSuchElementException) {
-                listOf()
-            }
-        } else listOf()
+            event.interaction
+                .commandInteraction.get()
+                .resolved.get()
+                .roles
+                .values
+                .flatMap { role ->
+                    if (!role.isEveryone) lookupService.findMembersWithRole(guild, role)
+                    else listOf()
+                }
+                .filter { !it.isBot }
+        } catch (_: NoSuchElementException) {
+            listOf()
+        }
 
         val allMentions = (userMentions + roleMentions).toSet()
 
         if (allMentions.isEmpty()) {
-            val roleMentionExplain = if (!discordConfig.roleResolveEnabled) ", custom roles," else ""
-
             event.editReply(
                 """
-                You'll need to select some users to create a `$MENTIONS` check. Keep in mind I can't wait for bots$roleMentionExplain or `@everyone/@here`.
+                You'll need to select some users to create a `$MENTIONS` check. Keep in mind I can't wait for bots or `@everyone/@here`.
                 
                 If you'd like to wait for a number of users rather than specific users, use `/$CHECK $COUNT` instead.
                 """.trimIndent()
@@ -118,6 +112,7 @@ class CheckCreationService(
                 event.editReply(
                     """
                     Sorry, I can only wait for one or more users with a `$COUNT` check. Try creating your check with a count of at least 1.
+                    
                     If you'd like to wait for specific users rather than a number, use `/$CHECK $MENTIONS`
                     """.trimIndent()
                 ).subscribe()

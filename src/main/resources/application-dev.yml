@@ -1,5 +1,2 @@
-discord:
-  roleResolveEnabled: true
-
 mongo:
   dbName: "readyChecksDev"

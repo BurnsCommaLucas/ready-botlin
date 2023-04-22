@@ -71,7 +71,8 @@ they're being abused.
 #### Permissions! 
 In the future, I'd like to allow more control for server admins over who can and can't create checks. Since checks are 
 one-per-channel, anyone in the channel can maliciously overwrite the current check at any time. Adding a persistent 
-database is the first step toward this goal.
+database is the first step toward this goal. I'll also need to assess how best to implement the permissions to avoid 
+making my database storage run rampant.
 
 ### Why did you rewrite the bot in Kotlin?
 

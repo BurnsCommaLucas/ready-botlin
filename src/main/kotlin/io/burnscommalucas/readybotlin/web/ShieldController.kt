@@ -5,20 +5,17 @@ import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod.GET
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.Duration
 
-@Component
 @RestController
 class ShieldController(
     private val discordClient: GatewayDiscordClient
 ) {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    @RequestMapping(value = ["/guild-count"], method = [GET])
+    @GetMapping("/guild-count")
     suspend fun getServerCount(): ResponseEntity<Any> =
         try {
             discordClient.restClient.guilds.count().cache(Duration.ofMinutes(5))
